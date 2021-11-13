@@ -5,7 +5,7 @@
                 <t t-call="web.external_layout">
                     <t t-foreach="docs" t-as="doc">
                         <!--            Title of Report    -->
-                        <h3 style="text-align:center;">فاتورة ضريبية</h3>
+                        <h3 style="text-align:center;margin-top:0px;">فاتورة ضريبية</h3>
                         <h2 style="text-align:center;">Tax Invoice</h2>
                         <style>
                             .lable_bold {
@@ -41,7 +41,7 @@
                         <t t-set="amount_due_0" t-value="total_amount_0-discount_counter_0"/>-->
 <!--commenting-->
                         <div class="page">
-                            <img class="float-right" alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', ('Seller Name: '+doc.company_id.name.replace('&amp;','AND'),'Seller Vat: ' +doc.company_id.vat,'Issue Date: ' +doc.create_date.strftime('%Y-%m-%d %H:%M:%S'),'Total Vat: ' +str(doc.amount_tax),'Total Amount Due: ' +str(doc.amount_total)), 120,120)"/>
+                            <img class="float-right" alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', ('Seller Name: '+doc.company_id.name.replace('&amp;','AND'),'Seller Vat: ' +doc.company_id.vat if doc.company_id.vat else '','Issue Date: ' +doc.create_date.strftime('%Y-%m-%d %H:%M:%S'),'Total Vat: ' +str(doc.amount_tax),'Total Amount Due: ' +str(doc.amount_total)), 120,120)"/>
                         </div>
 
 
