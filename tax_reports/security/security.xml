@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="group_e_invoice_b2c" model="res.groups">
+            <field name="name">Show E-Invoice B2C</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <report
+                id="report_sales_order"
+                string="E Invoice Standard"
+                model="account.move"
+                report_type="qweb-pdf"
+                name="tax_reports.report_sale_order"
+                file="tax_reports.report_sale_order"
+                print_report_name="(object._get_tax_report_base_filename())"
+        />
+</odoo>
+

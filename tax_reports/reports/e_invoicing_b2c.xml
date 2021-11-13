@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <report
+                id="report_e_invoicing_b2c"
+                string="E Invoicing B2C"
+                model="account.move"
+                report_type="qweb-pdf"
+                name="tax_reports.report_e_invoicing_b2c_name"
+                file="tax_reports.report_e_invoicing_b2c_name"
+                print_report_name="(object._get_e_invoice_tax_report_base_filename())"
+                groups="tax_reports.group_e_invoice_b2c"
+        />
+    <template id="tax_reports.report_e_invoicing_b2c_name">
+        <t t-call="web.basic_layout">
+            <style type="text/css">
+                <![CDATA[
+                @font-face {
+                    font-family: 'Arial';
+                    font-weight: bold;
+                    font-style: bold;
+                    src: url('/tax_reports/static/src/fonts/arial.ttf')
+                    format('truetype');
+                        }
+                 tr,td {
+                    font-family: 'Arial';
+                        }
+
+                    ]]>
+            </style>
+                <t t-foreach="docs" t-as="doc">
+                    <div class="pos-receipt" style="text-align: left;
+                                width: 300px;
+                                background-color: white;
+                                font-size: 14px;
+                                padding:0;
+                                margin:0;
+                                padding-bottom: 30px;
+                                display: inline-block;
+                                font-family: 'Arial';
+                                overflow: hidden;">
+                        <t t-if="doc.env.user.company_id.logo">
+            <!--                            <img style="width: 50%;-->
+            <!--                                        display: block;-->
+            <!--                                        margin: 0 auto;"-->
+            <!--                                 class="pos-receipt-logo" t-att-src="doc.env.user.company_id.logo" alt="Logo"/>-->
+                             <img  t-attf-src="data:image/*;base64,{{doc.env.user.company_id.logo}}" style="max-height:500px; max-width:50%;display: block;margin: 0 auto;" t-options='{"widget": "image"}'></img>
+                            <br/>
+                        </t>
+                        <t t-if="not doc.env.user.company_id.logo">
+                            <h2  style="text-align: center;" class="pos-receipt-center-align">
+                                <t t-esc="doc.env.user.company_id.name" />
+                            </h2>
+                            <br/>
+                        </t>
+                        <div  class="pos-receipt-contact" style="text-align: center;">
+                            <t t-if="doc.env.user.company_id.street">
+                                <div><t t-esc="doc.env.user.company_id.street" /></div>
+                            </t>
+                            <t t-if="doc.env.user.company_id.phone">
+                                <div>Tel:<t t-esc="doc.env.user.company_id.phone" /></div>
+                            </t>
+                            <t t-if="doc.env.user.company_id.vat">
+                            <div><span>Tax ID</span>:<t t-esc="doc.env.user.company_id.vat" /></div>
+                            </t>
+                            <t t-if="doc.env.user.company_id.email">
+                                <div><t t-esc="doc.env.user.company_id.email" /></div>
+                            </t>
+                            <t t-if="doc.env.user.company_id.website">
+                                <div><t t-esc="doc.env.user.company_id.website" /></div>
+                            </t>
+                        </div>
+                        <div class="pos-receipt-contact" style="padding-top:10px;text-align: center;font-weight:bold;font-size:15px;">
+                            <span>فاتورة ضريبية مبسطة</span><br />
+                            <span>Simplified Tax Invoice</span>
+                        </div>
+                        <hr/>
+                        <!-- Seller Details -->
+
+                        <div>
+                            <table width="100%">
+                                <tr>
+                                    <td width="20%"><span style="font-size:11px;font-weight:bold;"><b>Invoice Number:</b></span></td>
+                                    <td width="30%" style="font-size:11px;">
+                                        <span style="font-size:11px" id="invoice_number"><t t-esc="doc.name" /> </span>
+                                    </td>
+                                    <td width="30%" style="font-size:11px;"><span id="invoice_number1" style="font-size:11px"><t t-esc="doc.name" /></span></td>
+                                    <td width="20%"><span style="font-size:11px;font-weight:bold;">:رقم الفاتورة</span></td>
+                                </tr>
+                                <tr>
+                                    <td width="20%"><span style="font-size:11px;font-weight:bold;"><b>Invoice Issue Date:</b></span></td>
+                                    <td width="30%" style="font-size:11px;">
+                                        <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+                                    </td>
+                                    <td width="30%" style="font-size:11px;">
+                                        <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+                                    </td>
+                                    <td width="20%"><span style="font-size:11px;font-weight:bold;">:تاريخ إصدار الفاتورة</span></td>
+                                </tr>
+                                <tr>
+                                    <td width="20%"><span style="font-size:11px;font-weight:bold;"><b>Name:</b></span></td>
+                                    <td width="30%" style="font-size:11px;">
+                                        <t t-if="doc.env.user.company_id.name" t-esc="doc.env.user.company_id.name"/>
+                                    </td>
+                                    <td width="30%" style="font-size:11px;">
+                                        <t t-if="doc.env.user.company_id.name" t-esc="doc.env.user.company_id.name"/>
+                                    </td>
+                                    <td width="20%"><span style="font-size:11px;font-weight:bold;">:اسم الشركة</span></td>
+                                </tr>
+                                <tr>
+                                    <td width="20%"><span style="font-size:11px;font-weight:bold;"><b>Address:</b></span></td>
+                                    <td width="30%" style="font-size:11px;">
+                                        <t t-if="doc.env.user.company_id.name" t-esc="doc.env.user.company_id.street"/>
+                                    </td>
+                                    <td width="30%" style="font-size:11px;">
+                                        <t t-if="doc.env.user.company_id.name" t-esc="doc.env.user.company_id.street"/>
+                                    </td>
+                                    <td width="20%"><span style="font-size:11px;font-weight:bold;">:العنوان</span></td>
+                                </tr>
+                                <tr>
+                                    <td width="20%"><span style="font-size:11px;font-weight:bold;"><b>VAT:</b></span></td>
+                                    <td width="30%" style="font-size:11px;">
+                                        <t t-if="doc.env.user.company_id.name" t-esc="doc.env.user.company_id.vat"/>
+                                    </td>
+                                    <td width="30%" style="font-size:11px;">
+                                        <t t-if="doc.env.user.company_id.name" t-esc="doc.env.user.company_id.vat"/>
+                                    </td>
+                                    <td width="20%"><span style="font-size:11px;font-weight:bold;">:رقم تسجیل ضریبة القیمة المضافة</span></td>
+                                </tr>
+                            </table>
+                            <br />
+                            <table width="100%">
+                                <col style="width:40%"/>
+                                <col style="width:15%"/>
+                                <col style="width:15%"/>
+                                <col style="width:30%"/>
+                                <tr style="border:1px solid black;background-color:#5a5a5a;color:white;">
+                                    <th align="center" name="nature_of_goods=" style="text-align:center;font-size:11px;width">
+                                        <span>Nature of Goods</span><br />
+                                        <span>التفاصيل السلع أو الخدمات</span>
+                                    </th>
+                                    <th align="center" name="unit_price" style="text-align:center;font-size:11px">
+                                        <span>Unit Price</span><br />
+                                        <span>سعر الوحدة</span><br />
+                                    </th>
+                                    <th align="center" name="quantity" style="text-align:center;font-size:11px;">
+                                        <span>Quantity</span><br />
+                                        <span>الكمية</span>
+                                    </th>
+                                    <th align="right" name="item_subtotal" class="second_table" style="text-align:center;font-size:11px;">
+                                        <span>Item Subtotal (Incl. VAT)</span><br />
+                                        <span>المجموع (شامل ضريبة القيمة المضافة) </span><br />
+                                    </th>
+                                </tr>
+                                <t t-foreach="doc.invoice_line_ids" t-as="line" t-key="line.id">
+                                    <t t-set="total_tax_percent" t-value="0"/>
+                                      <t t-set="total_tax_percent_inc" t-value="0"/>
+                                      <t t-foreach="line.tax_ids" t-as="tax_line">
+                                          <t t-set="total_tax_percent" t-value="total_tax_percent+tax_line.amount"/>
+                                          <t t-if="tax_line.price_include">
+                                              <t t-set="total_tax_percent_inc" t-value="total_tax_percent_inc+tax_line.amount"/>
+                                          </t>
+                                      </t>
+                                    <tr>
+                                        <td style="text-align:left;;font-size:11px;padding: 3px 0;">
+                                            <span t-esc="line.name"/>
+                                        </td>
+                                        <td style="text-align:right;;font-size:11px;padding: 3px 0;">
+                                            <span t-esc="round((line.price_unit/(1+total_tax_percent_inc/100)),2)"/>
+                                        </td>
+                                        <td style="text-align:right;;font-size:11px;padding: 3px 0;">
+                                          <t t-esc="line.quantity"/>
+                                        </td>
+                                        <td style="text-align:right;;font-size:11px;padding: 3px 0;">
+                                          <t t-esc="line.price_total" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <hr></hr>
+                             <table width="100%">
+                                <tr>
+                                    <td width="40%" style="text-align:left;font-size:11px;padding: 5px 0;">
+                                        <span>Total Taxable Amount (Excluding VAT)</span>
+                                    </td>
+                                    <td width="40%" style="text-align:right;font-size:11px;padding: 5px 0;">
+                                        <span>إجمالي الخاضع للضريبة غیر شامل ضریبة القیمة </span>
+                                    </td>
+                                    <td width="20%" style="text-align:right;font-size:11px;padding: 5px 0;">
+                                        <span t-esc="doc.amount_untaxed"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td width="40%" style="text-align:left;font-size:11px;padding: 5px 0;">
+                                        <span>Total VAT</span>
+                                    </td>
+                                    <td width="40%" style="text-align:right;font-size:11px;padding: 5px 0;">
+                                        <span>مجموع ضریبة القیمة المضافة</span>
+                                    </td>
+                                    <td width="20%" style="text-align:right;font-size:11px;padding: 5px 0;">
+                                        <span t-esc="doc.amount_tax" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="40%" style="text-align:left;font-size:11px;padding: 5px 0;">
+                                        <span>Total Amount Due</span>
+                                    </td>
+                                    <td width="40%" style="text-align:right;font-size:11px;padding: 5px 0;">
+                                        <span>إجمالي المبلغ المستحق</span>
+                                    </td>
+                                    <td width="20%" style="text-align:right;font-size:11px;padding: 5px 0;">
+                                        <span t-esc="doc.amount_total"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <hr></hr>
+                        </div>
+
+
+                         <!-- QR code Data -->
+                        <div class="page" style="text-align:center;">
+                        <img style="text-align:center;" alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', ('Seller Name: '+doc.company_id.name.replace('&amp;','AND'),'Seller Vat: ' +doc.company_id.vat,'Issue Date: ' +doc.create_date.strftime('%Y-%m-%d %H:%M:%S'),'Total Vat: ' +str(doc.amount_tax),'Total Amount Due: ' +str(doc.amount_total)), 120,120)"/>
+                        </div>
+
+                     </div>
+                </t>
+            </t>
+    </template>
+</odoo>

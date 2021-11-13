@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="taxreports_layout" inherit_id="web.external_layout_boxed">
+        <xpath expr="//div[@t-attf-class='article o_report_layout_boxed o_company_#{company.id}_layout']/div[hasclass('pt-5')]" position="replace">
+            <div class="pt-0">
+                <t t-call="web.address_layout"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>
