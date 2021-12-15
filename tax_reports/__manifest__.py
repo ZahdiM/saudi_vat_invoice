@@ -25,7 +25,7 @@
         'reports/e_invoicing_b2c.xml',
         # 'view/inherit_web_external_layout.xml'
     ],
-    'image': ['static/description/icon.png'],
+    "images":['static/description/Banner.png'],
     'demo_xml': [],
     'installable': True,
     'auto_install': False,
