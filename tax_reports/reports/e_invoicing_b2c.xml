@@ -219,7 +219,7 @@
 
                          <!-- QR code Data -->
                         <div class="page" style="text-align:center;">
-                        <img style="text-align:center;" alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', ('Seller Name: '+doc.company_id.name.replace('&amp;','AND'),'Seller Vat: ' +doc.company_id.vat,'Issue Date: ' +doc.create_date.strftime('%Y-%m-%d %H:%M:%S'),'Total Vat: ' +str(doc.amount_tax),'Total Amount Due: ' +str(doc.amount_total)), 120,120)"/>
+                        <img style="text-align:center;" alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', doc.l10n_sa_qr_code_str, 150, 150)"/>
                         </div>
 
                      </div>
