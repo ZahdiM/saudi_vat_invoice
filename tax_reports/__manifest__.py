@@ -10,7 +10,7 @@
     # Author
     'author': 'Mediod Consulting Pvt. Ltd.',
     'website': 'http://www.mediodconsulting.com/',
-    'maintainer': 'Mediod Consulting Pvt. Ltd.',
+    'maintainer': 'Zahid Mehmood',
 
     # Views
     'init_xml': [],
